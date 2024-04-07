@@ -39,12 +39,12 @@ public class Counsel extends BaseEntity {
     @Column(columnDefinition = "text DEFAULT NULL COMMENT '상담메모'")
     private String memo;
 
-    @Column(columnDefinition = "varchar2(50) DEFAULT NULL COMMENT '주소'")
+    @Column(columnDefinition = "varchar(50) DEFAULT NULL COMMENT '주소'")
     private String address;
 
-    @Column(columnDefinition = "varchar2(50) DEFAULT NULL COMMENT '상세주소'")
+    @Column(columnDefinition = "varchar(50) DEFAULT NULL COMMENT '상세주소'")
     private String addressDetail;
 
-    @Column(columnDefinition = "varchar2(5) DEFAULT NULL COMMENT '우편번호'")
+    @Column(columnDefinition = "varchar(5) DEFAULT NULL COMMENT '우편번호'")
     private String zipCode;
 }
