@@ -3,6 +3,8 @@ package org.ddangme.loan.service;
 
 import lombok.RequiredArgsConstructor;
 import org.ddangme.loan.domain.Counsel;
+import org.ddangme.loan.exception.BaseException;
+import org.ddangme.loan.exception.ResultType;
 import org.ddangme.loan.repository.CounselRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,13 @@ public class CounselServiceImpl implements CounselService {
         Counsel created = counselRepository.save(counsel);
 
         return modelMapper.map(created, Response.class);
+    }
+
+    @Override
+    public Response get(Long counselId) {
+        Counsel counsel = counselRepository.findById(counselId)
+                .orElseThrow(() -> new BaseException(ResultType.SYSTEM_ERROR));
+
+        return modelMapper.map(counsel, Response.class);
     }
 }

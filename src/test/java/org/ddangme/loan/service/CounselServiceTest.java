@@ -2,6 +2,8 @@ package org.ddangme.loan.service;
 
 import org.ddangme.loan.domain.Counsel;
 import org.ddangme.loan.dto.CounselDTO;
+import org.ddangme.loan.exception.BaseException;
+import org.ddangme.loan.exception.ResultType;
 import org.ddangme.loan.repository.CounselRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +14,10 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 
@@ -54,5 +59,27 @@ public class CounselServiceTest {
         CounselDTO.Response actual = counselService.create(request);
 
         assertThat(actual.getName()).isSameAs(entity.getName());
+    }
+
+    @Test
+    void Should_ReturnResponseOfExistCounselEntity_When_RequestExistCounselId() {
+        Long findId = 1L;
+
+        Counsel entity = Counsel.builder().counselId(1L).build();
+
+        when(counselRepository.findById(findId)).thenReturn(Optional.ofNullable(entity));
+
+        CounselDTO.Response actual = counselService.get(findId);
+
+        assertThat(actual.getCounselId()).isSameAs(findId);
+    }
+
+    @Test
+    void Should_ThrowException_When_RequestNotExistCounselId() {
+        Long findId = 2L;
+
+        when(counselRepository.findById(findId)).thenThrow(new BaseException(ResultType.SYSTEM_ERROR));
+
+        assertThrows(BaseException.class, () -> counselService.get(findId));
     }
 }
