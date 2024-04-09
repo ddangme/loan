@@ -32,8 +32,9 @@
 - OpenJDK 17.0
 - Spring boot 2.7.1
 - MySQL 8.0
-- JPA
+- Spring jpa
 - Lombok
+- Postman
 
 ## 대출 상담
 ```sql
